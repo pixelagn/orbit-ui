@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "IBM Plex Sans";
+    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Regular.otf");
+}
+
+@font-face {
+    font-family: "IBM Plex Sans Bold";
+    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Bold.otf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans Light";
+    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Light.otf");
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans Medium";
+    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Medium.otf");
+    font-weight: medium;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans SemiBold";
+    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-SemiBold.otf");
+    font-weight: 600;
+}
+
+:root {
+    --main: #DF6235;
+    --secondary: #007BFF;
+    --background: #F5F5F5;
+    --forground: #44484D;
+    --black: #161616;
+    --border: #D6D9DB
+}
+
+@theme {
+    --color-main: var(--main);
+    --color-secondary: var(--secondary);
+    --color-background: var(--background);
+    --color-forground: var(--forground);
+    --color-black: var(--black);
+    --color-border: var(--border);
+}
+
+* {
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
+body {
+    font-family: "IBM Plex Sans", sans-serif;
+}
