@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>المدار</title>
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="public/orbit-icon.png" type="image/x-icon">
+
+        <!-- Styles -->
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --color-main: var(--main);
+                --color-secondary: var(--secondary);
+                --color-background: var(--background);
+                --color-forground: var(--forground);
+                --color-black: var(--black);
+                --color-border: var(--border);
+                --font-medium: 'IBM Plex Sans Arabic Medium'
+                --color-error: var(--error);
+                --color-warning: var(--warning);
+                --color-success: var(--success);
+                --color-secondary-foreground: var(--secondary-foreground);
+            }
+
+            button {
+                cursor: pointer;
+            }
+
+            a:not(button a) {
+                @apply hover:text-main/80 cursor-pointer;
+            }
+
+            button:hover,
+            a:hover {
+                transition: all 0.3s ease-in-out;
+            }
+
+            i.icon {
+                line-height: 0;
+            }
+
+            .btn {
+                @apply py-2 px-4 font-medium flex items-center 
+                justify-center gap-1 rounded-2xl min-w-full;
+            }
+
+            .btn-lg {
+                @apply min-w-[146px] max-sm:min-w-[123px] h-[45px] py-2 px-4 font-medium
+                rounded-2xl;
+            }
+
+            .btn-lg.active {
+                @apply bg-white shadow-lg;
+            }
+
+            /* Form ------------------------------------------------------------------- */
+            .form {
+                @apply flex flex-col gap-4;
+            }
+
+            .form-control {
+                @apply flex flex-col gap-1;
+            }
+
+            .form-control-group {
+                @apply h-10 border border-border rounded-lg p-2 
+                focus:outline-none focus:border-main
+                flex items-center gap-2 justify-between;
+            }
+
+            .form-control-group input {
+                @apply focus:outline-none w-full px-2;
+            }
+
+            .input-field {
+                @apply h-10 border border-border rounded-lg p-2 px-4 
+                focus:outline-none focus:border-main;
+            }
+
+            .checkbox-field {
+                @apply h-4 w-4 border border-border rounded-lg;
+            }
+
+            .checkbox-control {
+                @apply flex items-center gap-2;
+                accent-color: var(--main);
+            }
+
+            label.required::after {
+                content: "*";
+                color: var(--error);
+                font-size: 0.8rem;
+                margin: 0 0.25rem;
+            }
+
+            .form-field-hint {
+                @apply text-secondary-foreground text-sm
+                flex items-center gap-1
+            }
+
+            /* Breadcrumbs ------------------------------------------------------------ */
+            .breadcrumbs-list {
+                @apply flex items-center gap-2 text-secondary-foreground text-sm
+            }
+
+            .breadcrumbs-list .breadcrumbs-item {
+                @apply flex items-center gap-2
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:not(.breadcrumbs-list .breadcrumbs-item:last-child)::after {
+                content: url("/public/icons/light/CaretLeft.svg");
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:last-child {
+                @apply text-black font-medium
+            }
+
+            /* text with line */
+            .text-with-line {
+                position: relative;
+            }
+
+            .text-with-line::after,
+            .text-with-line::before {
+                content: "";
+                display: inline-block;
+                width: 20%;
+                height: 1px;
+                background-color: var(--border);
+                margin: 0 1rem;
+                vertical-align: middle;
+                @apply max-sm:w-4
+            }
+        </style>
+
+        <link rel="stylesheet" href="./public/styles/index.css">
+    </head>
+
+    <body class="py-4 px-[5%]">
+        <header class="flex justify-between items-center">
+            <section>
+                <img src="./public/orbit-logo.png" alt="المدار" class="w-[187px] max-lg:w-32 max-sm:hidden">
+                <img src="./public/orbit-icon.png" alt="المدار" class="w-8 h-8 sm:hidden">
+            </section>
+
+            <section class="flex items-center gap-4">
+                <p class="font-bold max-sm:hidden">English</p>
+                <img src="./public/images/united-kingdom.svg" alt="En" class="w-6 h-6 md:w-8 md:h-8">
+        </header>
+
+        <main class="flex gap-4 justify-around items-center my-4 max-sm:my-16 min-h-[calc(100vh-150px)] max-lg:min-h-[80vh] max-lg:flex-col max-lg:justify-center">
+            <section class="w-[467px] h-[508px] bg-neutral-100 rounded-2xl max-lg:hidden">
+                <img src="" alt="سيتم إضافة صورة لاحقًا" class="w-full h-full">
+            </section>
+
+            <section class="flex flex-col gap-8 w-[527px] max-sm:w-full rounded-2xl p-8 border border-border shadow-md">
+                <header class="text-center">
+                    <h1 class="font-semibold text-main text-[32px]">مرحبًا</h1>
+                    <h2 class="font-semibold text-black text-[32px]">كيف تود استخدام منصة مدار؟</h2>
+                    <p class="text-secondary-foreground">
+                        هل ترغب في إرسال رسائل نصية شخصية كفرد، أم تمثل جهة مثل مدرسة أو شركة وتحتاج للتواصل مع جمهورك؟ اختر طريقتك وابدأ الآن!
+                    </p>
+                </header>
+
+                <section id="user-types-container" class="grid grid-cols-2 gap-4 text-center">
+                    <button 
+                        class="
+                            flex flex-col gap-2 items-center py-5 px-10 rounded-2xl
+                            border border-border hover:shadow-md transition 
+                            [&:has(:checked)]:border-main relative [&:has(:checked)]:shadow-md
+                            [&:has(:checked)]:bg-main/10 cursor-pointer
+                            max-sm:px-4 max-sm:py-4
+                        "
+                    >
+                        <input 
+                            type="radio" 
+                            name="userType" 
+                            id="individual" 
+                            class="peer w-5 h-5 accent-main absolute top-4 right-4 max-sm:right-2"
+                        >
+                        <section 
+                            class="
+                                text-6xl w-16 h-16 bg-main/15 text-main rounded-xl 
+                                peer-checked:bg-main peer-checked:text-white
+                                flex items-center justify-center
+                            "
+                        >
+                            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.4999 16.5001C20.1818 16.5001 23.1666 13.5153 23.1666 9.83341C23.1666 6.15152 20.1818 3.16675 16.4999 3.16675C12.818 3.16675 9.83325 6.15152 9.83325 9.83341C9.83325 13.5153 12.818 16.5001 16.4999 16.5001Z" fill="currentColor"/>
+                                <path d="M16.4999 19.8333C9.81988 19.8333 4.37988 24.3133 4.37988 29.8333C4.37988 30.2066 4.67322 30.4999 5.04655 30.4999L27.9532 30.4999C28.3266 30.4999 28.6199 30.2066 28.6199 29.8333C28.6199 24.3133 23.1799 19.8333 16.4999 19.8333Z" fill="currentColor"/>
+                            </svg>
+                        </section>
+                        
+                        <header>
+                            <h3 class="text-lg font-medium">فرد</h3>
+                        </header>
+
+                        <p>
+                            حساب شخصي لإرسال الرسائل النصية الخاصة بك مباشرة.
+                        </p>
+                    </button>
+                    
+                    <button 
+                        class="
+                            flex flex-col gap-2 items-center py-5 px-10 rounded-2xl
+                            border border-border hover:shadow-md transition 
+                            [&:has(:checked)]:border-main relative [&:has(:checked)]:shadow-md
+                            [&:has(:checked)]:bg-main/10 cursor-pointer
+                            max-sm:px-4 max-sm:py-4
+                        "
+                    >
+                        <input 
+                            type="radio" 
+                            name="userType" 
+                            id="individual" 
+                            class="peer w-5 h-5 accent-main absolute top-4 right-4 max-sm:right-2"
+                        >
+                        <section 
+                            class="
+                                text-6xl w-16 h-16 bg-main/15 text-main rounded-xl 
+                                peer-checked:bg-main peer-checked:text-white
+                                flex items-center justify-center
+                            "
+                        >
+                            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28.6199 9.80677C27.4866 8.55344 25.5932 7.92677 22.8466 7.92677H22.5266V7.87344C22.5266 5.63344 22.5266 2.86011 17.5132 2.86011L15.4866 2.86011C10.4732 2.86011 10.4732 5.64677 10.4732 7.87344V7.94011H10.1532C7.39322 7.94011 5.51322 8.56677 4.37989 9.82011C3.05989 11.2868 3.09989 13.2601 3.23322 14.6068L3.24655 14.7001L3.35734 15.8634C3.37161 16.0132 3.45244 16.1485 3.5782 16.2311C3.88519 16.4327 4.47584 16.8156 4.81989 17.0068C5.00655 17.1268 5.20655 17.2334 5.40655 17.3401C7.68655 18.5934 10.1932 19.4334 12.7399 19.8468C12.8599 21.1001 13.4066 22.5668 16.3266 22.5668C19.2466 22.5668 19.8199 21.1134 19.9132 19.8201C22.6332 19.3801 25.2599 18.4334 27.6332 17.0468C27.7132 17.0068 27.7666 16.9668 27.8332 16.9268C28.3831 16.616 28.9543 16.2302 29.4702 15.8559C29.583 15.774 29.6553 15.648 29.6707 15.5095L29.6999 15.2468L29.7666 14.6201C29.7799 14.5401 29.7799 14.4734 29.7932 14.3801C29.8999 13.0334 29.8732 11.1934 28.6199 9.80677ZM17.9532 18.9401C17.9532 20.3534 17.9532 20.5668 16.3132 20.5668C14.6732 20.5668 14.6732 20.3134 14.6732 18.9534V17.2734H17.9532V18.9401ZM12.3799 7.92677V7.87344C12.3799 5.60677 12.3799 4.76677 15.4866 4.76677H17.5132C20.6199 4.76677 20.6199 5.62011 20.6199 7.87344V7.94011L12.3799 7.94011V7.92677Z" fill="currentColor" />
+                                <path d="M28.6029 18.6825C28.9559 18.5131 29.3611 18.7939 29.3257 19.1839L28.8201 24.7534C28.5401 27.42 27.4468 30.14 21.5801 30.14L11.4201 30.14C5.55345 30.14 4.46012 27.42 4.18012 24.7667L3.69941 19.4789C3.66436 19.0934 4.06105 18.8132 4.41317 18.9739C5.87082 19.639 8.99371 21.0169 10.8226 21.478C10.9873 21.5195 11.1213 21.6372 11.1901 21.7924C11.9819 23.5765 13.7523 24.5267 16.3268 24.5267C18.8758 24.5267 20.6695 23.5399 21.4633 21.7526C21.5323 21.5973 21.6667 21.4795 21.8316 21.4379C23.7712 20.9474 27.084 19.4116 28.6029 18.6825Z" fill="currentColor" />
+                            </svg>
+
+                        </section>
+                        
+                        <header>
+                            <h3 class="text-lg font-medium">جهة</h3>
+                        </header>
+
+                        <p>
+                            حساب للمدارس، الشركات، أو الجمعيات لإدارة وإرسال الرسائل  لجمهورها.
+                        </p>
+                    </button>
+                </section>
+
+                <div>
+                    <button
+                        class="
+                            btn bg-main text-white hover:bg-main/80 
+                            disabled:bg-main/20 disabled:text-main/60 
+                            font-medium shadow-main/20 shadow
+                        "
+                        id="next-btn"
+                        disabled
+                    >
+                        <a href="#" class="block">التالي</a>
+                    </button>
+                </div>
+
+                <section class="text-center">
+                    <p class="text-forground [&>a]:text-black [&>a]:underline text-sm">
+                        من خلال  المتابعة، أنت توافق على <a href="#">الشروط و الأحكام</a> و <a href="#">سياسة الخصوصية</a>
+                    </p>
+
+                    <p class="mt-4">
+                        مسجل معنا بالفعل؟ <a href="./index.html" class="text-main">تسجيل الدخول</a>
+                    </p>
+                </section>
+            </section>
+        </main>
+
+        <script type="module" src="./public/js/auth/signup.js"></script>
+    </body>
+</html>

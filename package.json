@@ -1,6 +1,7 @@
 {
   "dependencies": {
+    "@motionone/dom": "^10.18.0",
     "@tailwindcss/cli": "^4.1.13",
-    "tailwindcss": "^4.1.13"
+    "motion": "^12.23.22"
   }
 }

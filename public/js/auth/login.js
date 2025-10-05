@@ -1,0 +1,100 @@
+import { animate, inView } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm"
+
+console.log("Hello, Orbit!");
+
+// Animation for login page
+inView("main section", (element) => {
+    animate(
+        element,
+        { opacity: 1, y: [-100, 0], x: [0, 0] },
+        {
+            duration: 0.9,
+            easing: [0.17, 0.55, 0.55, 1],
+        }
+    )
+
+    return () => animate(element, { opacity: 0, x: -100 })
+});
+
+// Toggle buttons for switching between phone and username inputs
+const toggleBtns = document.querySelectorAll("#toggle-btns button");
+const phoneControl = document.getElementById("phone-control");
+const usernameControl = document.getElementById("username-control");
+
+console.log(usernameControl);
+
+usernameControl.classList.add("hidden!");
+
+toggleBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        toggleBtns.forEach((btn) => {
+            btn.classList.remove("active");
+        });
+
+        if (btn.id === "mobile-btn") {
+            phoneControl.classList.remove("hidden!");
+            usernameControl.classList.add("hidden!");
+        } else {
+            phoneControl.classList.add("hidden!");
+            usernameControl.classList.remove("hidden!");
+        }
+        
+        btn.classList.add("active");
+    });
+});
+
+// Show/hide password button
+const passwordInput = document.getElementById("password");
+const showPasswordBtn = document.getElementById("show-password-btn");
+
+showPasswordBtn.addEventListener("click", () => {
+    const passwordInput = document.getElementById("password");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        showPasswordBtn.innerHTML = `
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.39172 13.2333C8.23339 13.2333 8.07506 13.1749 7.95006 13.0499C7.26672 12.3666 6.89172 11.4583 6.89172 10.4999C6.89172 8.50827 8.50839 6.8916 10.5001 6.8916C11.4584 6.8916 12.3667 7.2666 13.0501 7.94993C13.1667 8.0666 13.2334 8.22494 13.2334 8.3916C13.2334 8.55827 13.1667 8.7166 13.0501 8.83327L8.83339 13.0499C8.70839 13.1749 8.55006 13.2333 8.39172 13.2333ZM10.5001 8.1416C9.20006 8.1416 8.14172 9.19993 8.14172 10.4999C8.14172 10.9166 8.25006 11.3166 8.45006 11.6666L11.6667 8.44993C11.3167 8.24993 10.9167 8.1416 10.5001 8.1416Z" fill="currentColor"/>
+                <path d="M5.16666 15.9251C5.02499 15.9251 4.87499 15.8751 4.75833 15.7751C3.86666 15.0167 3.06666 14.0834 2.38333 13.0001C1.49999 11.6251 1.49999 9.3834 2.38333 8.00006C4.41666 4.81673 7.37499 2.9834 10.5 2.9834C12.3333 2.9834 14.1417 3.61673 15.725 4.8084C16 5.01673 16.0583 5.4084 15.85 5.6834C15.6417 5.9584 15.25 6.01673 14.975 5.8084C13.6083 4.77506 12.0583 4.2334 10.5 4.2334C7.80833 4.2334 5.23333 5.85007 3.43333 8.67507C2.80833 9.65007 2.80833 11.3501 3.43333 12.3251C4.05833 13.3001 4.77499 14.1417 5.56666 14.8251C5.82499 15.0501 5.85833 15.4417 5.63333 15.7084C5.51666 15.8501 5.34166 15.9251 5.16666 15.9251Z" fill="currentColor"/>
+                <path d="M10.5 18.0166C9.39168 18.0166 8.30834 17.7916 7.26668 17.3499C6.95001 17.2166 6.80001 16.8499 6.93334 16.5333C7.06668 16.2166 7.43334 16.0666 7.75001 16.1999C8.63334 16.5749 9.55834 16.7666 10.4917 16.7666C13.1833 16.7666 15.7583 15.1499 17.5583 12.3249C18.1833 11.3499 18.1833 9.64992 17.5583 8.67492C17.3 8.26658 17.0167 7.87492 16.7167 7.50825C16.5 7.24158 16.5417 6.84992 16.8083 6.62492C17.075 6.40825 17.4667 6.44158 17.6917 6.71658C18.0167 7.11658 18.3333 7.54992 18.6167 7.99992C19.5 9.37492 19.5 11.6166 18.6167 12.9999C16.5833 16.1833 13.625 18.0166 10.5 18.0166Z" fill="currentColor"/>
+                <path d="M11.075 14.0584C10.7834 14.0584 10.5167 13.85 10.4584 13.55C10.3917 13.2084 10.6167 12.8834 10.9584 12.825C11.875 12.6584 12.6417 11.8917 12.8084 10.975C12.875 10.6334 13.2 10.4167 13.5417 10.475C13.8834 10.5417 14.1084 10.8667 14.0417 11.2084C13.775 12.65 12.625 13.7917 11.1917 14.0584C11.15 14.05 11.1167 14.0584 11.075 14.0584Z" fill="currentColor"/>
+                <path d="M2.16662 19.4583C2.00828 19.4583 1.84995 19.3999 1.72495 19.2749C1.48328 19.0333 1.48328 18.6333 1.72495 18.3916L7.94995 12.1666C8.19162 11.9249 8.59162 11.9249 8.83329 12.1666C9.07495 12.4083 9.07495 12.8083 8.83329 13.0499L2.60828 19.2749C2.48328 19.3999 2.32495 19.4583 2.16662 19.4583Z" fill="currentColor"/>
+                <path d="M12.6084 9.01662C12.4501 9.01662 12.2917 8.95829 12.1667 8.83329C11.9251 8.59162 11.9251 8.19162 12.1667 7.94995L18.3917 1.72495C18.6334 1.48328 19.0334 1.48328 19.2751 1.72495C19.5167 1.96662 19.5167 2.36662 19.2751 2.60828L13.0501 8.83329C12.9251 8.95829 12.7667 9.01662 12.6084 9.01662Z" fill="currentColor"/>
+            </svg>
+        `;
+    } else {
+        passwordInput.type = "password";
+        showPasswordBtn.innerHTML = `
+            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.5 14.1083C8.50833 14.1083 6.89166 12.4916 6.89166 10.4999C6.89166 8.50827 8.50833 6.8916 10.5 6.8916C12.4917 6.8916 14.1083 8.50827 14.1083 10.4999C14.1083 12.4916 12.4917 14.1083 10.5 14.1083ZM10.5 8.1416C9.2 8.1416 8.14166 9.19993 8.14166 10.4999C8.14166 11.7999 9.2 12.8583 10.5 12.8583C11.8 12.8583 12.8583 11.7999 12.8583 10.4999C12.8583 9.19993 11.8 8.1416 10.5 8.1416Z" fill="currentColor"/>
+                <path d="M10.5 18.0167C7.36666 18.0167 4.40833 16.1834 2.37499 13.0001C1.49166 11.6251 1.49166 9.3834 2.37499 8.00007C4.41666 4.81673 7.37499 2.9834 10.5 2.9834C13.625 2.9834 16.5833 4.81673 18.6167 8.00007C19.5 9.37507 19.5 11.6167 18.6167 13.0001C16.5833 16.1834 13.625 18.0167 10.5 18.0167ZM10.5 4.2334C7.80833 4.2334 5.23333 5.85007 3.43333 8.67507C2.80833 9.65007 2.80833 11.3501 3.43333 12.3251C5.23333 15.1501 7.80833 16.7667 10.5 16.7667C13.1917 16.7667 15.7667 15.1501 17.5667 12.3251C18.1917 11.3501 18.1917 9.65007 17.5667 8.67507C15.7667 5.85007 13.1917 4.2334 10.5 4.2334Z" fill="currentColor"/>
+            </svg>
+        `;
+    }
+});
+
+// Submit button disabled state based on input values
+const phoneInput = document.getElementById("phone");
+const usernameInput = document.getElementById("username");
+const submitBtn = document.getElementById("submit-btn");
+
+// validate phone input
+phoneInput.addEventListener("input", (e) => {
+    if (e.target.value > 9) {
+        phoneInput.value = e.target.value.slice(0, 9);
+    }
+
+    if (e.target.value.length === 9) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+});
+
+usernameInput.addEventListener("input", (e) => {
+    if (e.target.value.length > 0) {
+        submitBtn.disabled = false;
+    } else {
+        submitBtn.disabled = true;
+    }
+});

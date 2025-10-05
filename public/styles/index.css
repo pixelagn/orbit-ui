@@ -1,41 +1,24 @@
-@import "tailwindcss";
-
 @font-face {
-    font-family: "IBM Plex Sans";
-    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Regular.otf");
+    font-family: "IBM Plex Sans Arabic";
+    src: url("../fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Regular.ttf");
 }
 
 @font-face {
-    font-family: "IBM Plex Sans Bold";
-    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Bold.otf");
-    font-weight: bold;
-}
-
-@font-face {
-    font-family: "IBM Plex Sans Light";
-    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Light.otf");
-    font-weight: lighter;
-}
-
-@font-face {
-    font-family: "IBM Plex Sans Medium";
-    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-Medium.otf");
-    font-weight: medium;
-}
-
-@font-face {
-    font-family: "IBM Plex Sans SemiBold";
-    src: url("../fonts/IBM-Plex-Sans-Arabic/IBMPlexSansArabic-SemiBold.otf");
-    font-weight: 600;
+    font-family: "IBM Plex Sans Arabic Medium";
+    src: url("../fonts/IBM_Plex_Sans_Arabic/IBMPlexSansArabic-Medium.ttf");
 }
 
 :root {
     --main: #DF6235;
-    --secondary: #007BFF;
+    --secondary: #7ABC81;
     --background: #F5F5F5;
-    --forground: #44484D;
+    --forground: #404040;
     --black: #161616;
-    --border: #D6D9DB
+    --border: #D6D9DB;
+    --error: #E54545;
+    --warning: #FF8800;
+    --success: #0F9918;
+    --secondary-foreground: #6B6B6B;
 }
 
 @theme {
@@ -45,12 +28,124 @@
     --color-forground: var(--forground);
     --color-black: var(--black);
     --color-border: var(--border);
-}
-
-* {
-    font-family: "IBM Plex Sans", sans-serif;
+    --font-medium: 'IBM Plex Sans Arabic Medium'
+    --color-error: var(--error);
+    --color-warning: var(--warning);
+    --color-success: var(--success);
+    --color-secondary-foreground: var(--secondary-foreground);
 }
 
 body {
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "IBM Plex Sans Arabic", sans-serif !important;
+    color: var(--forground)
+}
+
+button {
+    cursor: pointer;
+}
+
+a:not(button a) {
+    @apply hover:text-main/80 cursor-pointer;
+}
+
+button:hover,
+a:hover {
+    transition: all 0.3s ease-in-out;
+}
+
+i.icon {
+    line-height: 0;
+}
+
+.btn {
+    @apply py-2 px-4 font-medium flex items-center 
+    justify-center gap-1 rounded-2xl min-w-full;
+}
+
+.btn-lg {
+    @apply min-w-[146px] max-sm:min-w-[123px] h-[45px] py-2 px-4 font-medium
+    rounded-2xl;
+}
+
+.btn-lg.active {
+    @apply bg-white shadow-lg;
+}
+
+/* Form ------------------------------------------------------------------- */
+.form {
+    @apply flex flex-col gap-4;
+}
+
+.form-control {
+    @apply flex flex-col gap-1;
+}
+
+.form-control-group {
+    @apply h-10 border border-border rounded-lg p-2 
+    focus:outline-none focus:border-main
+    flex items-center gap-2 justify-between;
+}
+
+.form-control-group input {
+    @apply focus:outline-none w-full px-2;
+}
+
+.input-field {
+    @apply h-10 border border-border rounded-lg p-2 px-4 
+    focus:outline-none focus:border-main;
+}
+
+.checkbox-field {
+    @apply h-4 w-4 border border-border rounded-lg;
+}
+
+.checkbox-control {
+    @apply flex items-center gap-2;
+    accent-color: var(--main);
+}
+
+label.required::after {
+    content: "*";
+    color: var(--error);
+    font-size: 0.8rem;
+    margin: 0 0.25rem;
+}
+
+.form-field-hint {
+    @apply text-secondary-foreground text-sm
+    flex items-center gap-1
+}
+
+/* Breadcrumbs ------------------------------------------------------------ */
+.breadcrumbs-list {
+    @apply flex items-center gap-2 text-secondary-foreground text-sm
+}
+
+.breadcrumbs-list .breadcrumbs-item {
+    @apply flex items-center gap-2
+}
+
+.breadcrumbs-list .breadcrumbs-item:not(.breadcrumbs-list .breadcrumbs-item:last-child)::after {
+    content: url("/public/icons/light/CaretLeft.svg");
+}
+
+.breadcrumbs-list .breadcrumbs-item:last-child {
+    @apply text-black font-medium
+}
+
+/* text with line */
+.text-with-line {
+    position: relative;
+}
+
+.text-with-line::after,
+.text-with-line::before {
+    content: "";
+    display: inline-block;
+    width: 20%;
+    height: 1px;
+    background-color: var(--border);
+    margin: 0 1rem;
+    vertical-align: middle;
+    @apply max-sm:w-4
 }

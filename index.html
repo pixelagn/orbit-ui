@@ -9,27 +9,271 @@
         <link rel="shortcut icon" href="public/orbit-icon.png" type="image/x-icon">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="./src/output.css">
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --color-main: var(--main);
+                --color-secondary: var(--secondary);
+                --color-background: var(--background);
+                --color-forground: var(--forground);
+                --color-black: var(--black);
+                --color-border: var(--border);
+                --font-medium: 'IBM Plex Sans Arabic Medium'
+                --color-error: var(--error);
+                --color-warning: var(--warning);
+                --color-success: var(--success);
+                --color-secondary-foreground: var(--secondary-foreground);
+            }
+
+            button {
+                cursor: pointer;
+            }
+
+            a:not(button a) {
+                @apply hover:text-main/80 cursor-pointer;
+            }
+
+            button:hover,
+            a:hover {
+                transition: all 0.3s ease-in-out;
+            }
+
+            i.icon {
+                line-height: 0;
+            }
+
+            .btn {
+                @apply py-2 px-4 font-medium flex items-center 
+                justify-center gap-1 rounded-2xl min-w-full;
+            }
+
+            .btn-lg {
+                @apply min-w-[146px] max-sm:min-w-[123px] h-[45px] py-2 px-4 font-medium
+                rounded-2xl;
+            }
+
+            .btn-lg.active {
+                @apply bg-white shadow-lg;
+            }
+
+            /* Form ------------------------------------------------------------------- */
+            .form {
+                @apply flex flex-col gap-4;
+            }
+
+            .form-control {
+                @apply flex flex-col gap-1;
+            }
+
+            .form-control-group {
+                @apply h-10 border border-border rounded-lg p-2 
+                focus:outline-none focus:border-main
+                flex items-center gap-2 justify-between;
+            }
+
+            .form-control-group input {
+                @apply focus:outline-none w-full px-2;
+            }
+
+            .input-field {
+                @apply h-10 border border-border rounded-lg p-2 px-4 
+                focus:outline-none focus:border-main;
+            }
+
+            .checkbox-field {
+                @apply h-4 w-4 border border-border rounded-lg;
+            }
+
+            .checkbox-control {
+                @apply flex items-center gap-2;
+                accent-color: var(--main);
+            }
+
+            label.required::after {
+                content: "*";
+                color: var(--error);
+                font-size: 0.8rem;
+                margin: 0 0.25rem;
+            }
+
+            .form-field-hint {
+                @apply text-secondary-foreground text-sm
+                flex items-center gap-1
+            }
+
+            /* Breadcrumbs ------------------------------------------------------------ */
+            .breadcrumbs-list {
+                @apply flex items-center gap-2 text-secondary-foreground text-sm
+            }
+
+            .breadcrumbs-list .breadcrumbs-item {
+                @apply flex items-center gap-2
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:not(.breadcrumbs-list .breadcrumbs-item:last-child)::after {
+                content: url("/public/icons/light/CaretLeft.svg");
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:last-child {
+                @apply text-black font-medium
+            }
+
+            /* text with line */
+            .text-with-line {
+                position: relative;
+            }
+
+            .text-with-line::after,
+            .text-with-line::before {
+                content: "";
+                display: inline-block;
+                width: 20%;
+                height: 1px;
+                background-color: var(--border);
+                margin: 0 1rem;
+                vertical-align: middle;
+                @apply max-sm:w-4
+            }
+        </style>
+
+        <link rel="stylesheet" href="./public/styles/index.css">
     </head>
 
     <body class="py-4 px-[5%]">
-        <header>
+        <header class="flex justify-between items-center">
             <section>
-                <img src="public/orbit-logo.png" alt="المدار" class="w-[187px]">
+                <img src="./public/orbit-logo.png" alt="المدار" class="w-[187px] max-lg:w-32 max-sm:hidden">
+                <img src="./public/orbit-icon.png" alt="المدار" class="w-8 h-8 sm:hidden">
             </section>
+
+            <section class="flex items-center gap-4">
+                <p class="font-bold max-sm:hidden">English</p>
+                <img src="./public/images/united-kingdom.svg" alt="En" class="w-6 h-6 md:w-8 md:h-8">
         </header>
 
-        <main class="flex gap-4 justify-around">
-            <section class="w-[467px] h-[508px] bg-neutral-300 rounded-lg">
+        <main class="flex gap-4 justify-around items-center my-4 max-sm:my-16 min-h-[calc(100vh-150px)] max-lg:min-h-[80vh] max-lg:flex-col max-lg:justify-center">
+            <section class="w-[467px] h-[508px] bg-neutral-100 rounded-2xl max-lg:hidden">
                 <img src="" alt="سيتم إضافة صورة لاحقًا" class="w-full h-full">
             </section>
 
-            <section class="flex flex-col gap-4 w-[527px] rounded-lg p-8 border border-border">
-                <header>
-                    <h1 class="font-bold text-2xl">مرحبًا بعودتك</h1>
-                    <p>سجل دخول إلى حسابك للمتابعة</p>
+            <section class="flex flex-col gap-4 w-[527px] max-sm:w-full rounded-2xl p-8 border border-border shadow-md">
+                <header class="text-center">
+                    <h1 class="font-semibold text-black text-[32px]">مرحبًا بعودتك</h1>
+                    <p class="text-secondary-foreground">سجل دخول إلى حسابك للمتابعة</p>
                 </header>
+
+                <section id="toggle-btns" class="bg-gray-100 flex gap-2 rounded-2xl text-main w-fit mx-auto p-1 my-4">
+                    <button id="mobile-btn" class="btn btn-lg active">
+                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M13 18.9584H8.00004C4.32504 18.9584 3.20837 17.8417 3.20837 14.1667V5.83342C3.20837 2.15841 4.32504 1.04175 8.00004 1.04175H13C16.675 1.04175 17.7917 2.15841 17.7917 5.83342V14.1667C17.7917 17.8417 16.675 18.9584 13 18.9584ZM8.00004 2.29175C5.01671 2.29175 4.45837 2.85841 4.45837 5.83342V14.1667C4.45837 17.1417 5.01671 17.7084 8.00004 17.7084H13C15.9834 17.7084 16.5417 17.1417 16.5417 14.1667V5.83342C16.5417 2.85841 15.9834 2.29175 13 2.29175H8.00004Z" fill="currentColor"/>
+                            <path d="M12.1667 5.20825H8.83337C8.49171 5.20825 8.20837 4.92492 8.20837 4.58325C8.20837 4.24159 8.49171 3.95825 8.83337 3.95825H12.1667C12.5084 3.95825 12.7917 4.24159 12.7917 4.58325C12.7917 4.92492 12.5084 5.20825 12.1667 5.20825Z" fill="currentColor"/>
+                            <path d="M10.5 16.5499C9.44171 16.5499 8.58337 15.6916 8.58337 14.6332C8.58337 13.5749 9.44171 12.7166 10.5 12.7166C11.5584 12.7166 12.4167 13.5749 12.4167 14.6332C12.4167 15.6916 11.5584 16.5499 10.5 16.5499ZM10.5 13.9582C10.1334 13.9582 9.83337 14.2582 9.83337 14.6249C9.83337 14.9916 10.1334 15.2916 10.5 15.2916C10.8667 15.2916 11.1667 14.9916 11.1667 14.6249C11.1667 14.2582 10.8667 13.9582 10.5 13.9582Z" fill="currentColor"/>
+                        </svg>
+                        <span>رقم الجوال
+                    </button>
+                    <button class="btn btn-lg" id="username-btn">
+                        <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.5 10.6251C7.85837 10.6251 5.70837 8.47508 5.70837 5.83341C5.70837 3.19175 7.85837 1.04175 10.5 1.04175C13.1417 1.04175 15.2917 3.19175 15.2917 5.83341C15.2917 8.47508 13.1417 10.6251 10.5 10.6251ZM10.5 2.29175C8.55004 2.29175 6.95837 3.88341 6.95837 5.83341C6.95837 7.78341 8.55004 9.37508 10.5 9.37508C12.45 9.37508 14.0417 7.78341 14.0417 5.83341C14.0417 3.88341 12.45 2.29175 10.5 2.29175Z" fill="currentColor"/>
+                            <path d="M17.6585 18.9583C17.3168 18.9583 17.0335 18.675 17.0335 18.3333C17.0335 15.4583 14.1001 13.125 10.5001 13.125C6.90013 13.125 3.9668 15.4583 3.9668 18.3333C3.9668 18.675 3.68346 18.9583 3.3418 18.9583C3.00013 18.9583 2.7168 18.675 2.7168 18.3333C2.7168 14.775 6.20846 11.875 10.5001 11.875C14.7918 11.875 18.2835 14.775 18.2835 18.3333C18.2835 18.675 18.0001 18.9583 17.6585 18.9583Z" fill="currentColor"/>
+                        </svg>
+                        <span>إسم المستخدم</span>
+                    </button>
+                </section>
+
+                <form action="/login" method="POST" class="form" id="login-form">
+                    <!-- phone -->
+                    <div class="form-control" id="phone-control">
+                        <label for="phone" class="font-medium text-black required">رقم الجوال</label>
+                        <section class="form-control-group">
+                            <input 
+                                type="tel" 
+                                name="phone" 
+                                id="phone" 
+                                placeholder="أدخل رقم الجوال" 
+                                required
+                                class="placeholder:text-right border-l border-border"
+                                max="9"
+                                inputmode="numeric"
+                            >
+                            <span class="text-forground w-fit"><bdi>+966</bdi></span>
+                        </section>
+                    </div>
+
+                    <!-- username -->
+                    <div class="form-control" id="username-control">
+                        <label for="username" class="font-medium text-black required">اسم المستخدم</label>
+                        <section class="form-control-group">
+                            <input 
+                                type="text" 
+                                name="username" 
+                                id="username" 
+                                placeholder="أدخل اسم المستخدم" 
+                                required
+                            >
+                        </section>
+                    </div>
+
+                    <!-- password -->
+                    <div class="form-control">
+                        <label for="password" class="font-medium text-black required">كلمة المرور</label>
+                        <section class="form-control-group">
+                            <input 
+                                tabindex="-1"
+                                type="password" 
+                                name="password" 
+                                id="password" 
+                                placeholder="أدخل كلمة المرور" 
+                                required
+                            >
+                            <button
+                                type="button"
+                                id="show-password-btn"
+                                class="text-forground w-fit p-1 hover:bg-main/10 hover:text-main rounded-md h-8 w-8!"
+                            >
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10.5 14.1083C8.50833 14.1083 6.89166 12.4916 6.89166 10.4999C6.89166 8.50827 8.50833 6.8916 10.5 6.8916C12.4917 6.8916 14.1083 8.50827 14.1083 10.4999C14.1083 12.4916 12.4917 14.1083 10.5 14.1083ZM10.5 8.1416C9.2 8.1416 8.14166 9.19993 8.14166 10.4999C8.14166 11.7999 9.2 12.8583 10.5 12.8583C11.8 12.8583 12.8583 11.7999 12.8583 10.4999C12.8583 9.19993 11.8 8.1416 10.5 8.1416Z" fill="#7C838C"/>
+                                    <path d="M10.5 18.0167C7.36666 18.0167 4.40833 16.1834 2.37499 13.0001C1.49166 11.6251 1.49166 9.3834 2.37499 8.00007C4.41666 4.81673 7.37499 2.9834 10.5 2.9834C13.625 2.9834 16.5833 4.81673 18.6167 8.00007C19.5 9.37507 19.5 11.6167 18.6167 13.0001C16.5833 16.1834 13.625 18.0167 10.5 18.0167ZM10.5 4.2334C7.80833 4.2334 5.23333 5.85007 3.43333 8.67507C2.80833 9.65007 2.80833 11.3501 3.43333 12.3251C5.23333 15.1501 7.80833 16.7667 10.5 16.7667C13.1917 16.7667 15.7667 15.1501 17.5667 12.3251C18.1917 11.3501 18.1917 9.65007 17.5667 8.67507C15.7667 5.85007 13.1917 4.2334 10.5 4.2334Z" fill="#7C838C"/>
+                                </svg>
+                            </button>
+                        </section>
+                    </div>
+
+                    <div class="flex items-center justify-between gap-2 text-sm">
+                        <div class="checkbox-control">
+                            <input type="checkbox" name="remember" id="remember" class="checkbox-field">
+                            <label for="remember" class="text-black">تذكرني</label>
+                        </div>
+
+                        <a href="./forgot-password.html" class="text-main">هل نسيت كلمة المرور؟</a>
+                    </div>
+                    <div>
+                        <button 
+                            type="submit" 
+                            class="
+                                btn bg-main text-white hover:bg-main/80 
+                                disabled:bg-main/20 disabled:text-main/60 
+                                font-medium shadow-main/20 shadow
+                            "
+                            id="submit-btn"
+                            disabled
+                        >
+                            تسجيل الدخول
+                        </button>
+                    </div>
+                </form>
+
+                <section class="text-center">
+                    <p class="text-forground [&>a]:text-black [&>a]:underline text-sm">
+                        من خلال  المتابعة، أنت توافق على <a href="#">الشروط و الأحكام</a> و <a href="#">سياسة الخصوصية</a>
+                    </p>
+
+                    <p class="mt-4">
+                        لا تملك حساباً بعد؟ <a href="./signup.html" class="text-main">إنشاء حساب</a>
+                    </p>
+                </section>
             </section>
         </main>
+
+        <script type="module" src="./public/js/auth/login.js"></script>
     </body>
 </html>
