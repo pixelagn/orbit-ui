@@ -20,11 +20,25 @@ const nextBtn = document.getElementById("next-btn");
 nextBtn.disabled = true;
 
 const userTypesContainer = document.querySelectorAll("#user-types-container button");
+let userType;
 
 userTypesContainer.forEach((btn) => {
     btn.addEventListener("click", () => {
-        btn.querySelector("input").checked = true;
+        const input = btn.querySelector("input");
+
+        if (!input) return;
+
+        input.checked = true;
 
         nextBtn.disabled = false;
+
+        if (input.id)
+            userType = input.id;
     });
+});
+
+nextBtn.addEventListener("click", () => {
+    if (!userType) return;
+
+    location.replace(`/create-${userType}-account.html`);
 });

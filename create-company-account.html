@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>المدار</title>
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="public/orbit-icon.png" type="image/x-icon">
+
+        <!-- Styles -->
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --color-main: var(--main);
+                --color-secondary: var(--secondary);
+                --color-background: var(--background);
+                --color-forground: var(--forground);
+                --color-black: var(--black);
+                --color-border: var(--border);
+                --font-medium: 'IBM Plex Sans Arabic Medium';
+                --color-error: var(--error);
+                --color-warning: var(--warning);
+                --color-success: var(--success);
+                --color-secondary-foreground: var(--secondary-foreground);
+            }
+
+            button {
+                cursor: pointer;
+            }
+
+            a:not(button a) {
+                @apply hover:text-main/80 cursor-pointer;
+            }
+
+            button:hover,
+            a:hover {
+                transition: all 0.3s ease-in-out;
+            }
+
+            i.icon {
+                line-height: 0;
+            }
+
+            .btn {
+                @apply py-2 px-4 font-medium flex items-center 
+                justify-center gap-1 rounded-2xl min-w-full;
+            }
+
+            .btn-lg {
+                @apply min-w-[146px] max-sm:min-w-[123px] h-[45px] py-2 px-4 font-medium
+                rounded-2xl;
+            }
+
+            .btn-lg.active {
+                @apply bg-white shadow-lg;
+            }
+
+            /* Form ------------------------------------------------------------------- */
+            .form {
+                @apply flex flex-col gap-4;
+            }
+
+            .form-control {
+                @apply flex flex-col gap-1;
+            }
+
+            .form-control-group {
+                @apply h-10 border border-border rounded-lg p-2 
+                focus:outline-none focus:border-main
+                flex items-center gap-2 justify-between;
+            }
+
+            .form-control-group input {
+                @apply focus:outline-none w-full px-2;
+            }
+
+            .input-field {
+                @apply h-10 border border-border rounded-lg p-2 px-4 
+                focus:outline-none focus:border-main;
+            }
+
+            .checkbox-field {
+                @apply h-4 w-4 border border-border rounded-lg;
+            }
+
+            .checkbox-control {
+                @apply flex items-center gap-2;
+                accent-color: var(--main);
+            }
+
+            label.required::after {
+                content: "*";
+                color: var(--error);
+                font-size: 0.8rem;
+                margin: 0 0.25rem;
+            }
+
+            .form-field-hint {
+                @apply text-secondary-foreground text-sm
+                flex items-center gap-1
+            }
+
+            /* Breadcrumbs ------------------------------------------------------------ */
+            .breadcrumbs-list {
+                @apply flex items-center gap-2 text-secondary-foreground text-sm
+            }
+
+            .breadcrumbs-list .breadcrumbs-item {
+                @apply flex items-center gap-2
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:not(.breadcrumbs-list .breadcrumbs-item:last-child)::after {
+                content: url("/public/icons/light/CaretLeft.svg");
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:last-child {
+                @apply text-black font-medium
+            }
+
+            /* text with line */
+            .text-with-line {
+                position: relative;
+            }
+
+            .text-with-line::after,
+            .text-with-line::before {
+                content: "";
+                display: inline-block;
+                width: 20%;
+                height: 1px;
+                background-color: var(--border);
+                margin: 0 1rem;
+                vertical-align: middle;
+                @apply max-sm:w-4
+            }
+        </style>
+
+        <link rel="stylesheet" href="./public/styles/index.css">
+    </head>
+
+    <body class="py-4 px-[5%]">
+        <header class="flex justify-between items-center">
+            <section>
+                <img src="./public/orbit-logo-dark.png" alt="المدار" class="w-[187px] max-lg:w-32 max-sm:hidden">
+                <img src="./public/orbit-icon.png" alt="المدار" class="w-8 h-8 sm:hidden">
+            </section>
+
+            <section class="flex items-center gap-4">
+                <p class="font-bold max-sm:hidden">English</p>
+                <img src="./public/images/united-kingdom.svg" alt="En" class="w-6 h-6 md:w-8 md:h-8">
+        </header>
+
+        <main class="flex flex-col gap-8 max-sm:gap-0">
+            <header class="flex flex-col gap-6 text-center mt-6 px-4 max-sm:mt-4">
+                <h1 class="text-black font-semibold text-2xl">إنشاء حساب</h1>
+                <p class="text-secondary-foreground">
+                    أدخل بياناتك الشخصية أو بيانات نشاطك لتتمكن من إرسال رسائلك  مباشرة
+                </p>
+            </header>
+
+            <!-- Stepper -->
+            <ol id="steper" class="flex gap-4 justify-between text-sm font-medium relative w-[500px] lg:w-[700px] mx-auto overflow-x-hidden max-sm:hidden">
+                <li class="step-item flex flex-col justify-center items-center gap-1 text-[#AAAAAA]">
+                    <span class="step-marker flex flex-col justify-center items-center w-6 h-6 bg-[#AAAAAA] rounded-full">
+
+                    </span>
+                    <span class="step-title">البيانات العامة</span>
+                </li>
+                <li class="step-item flex flex-col justify-center items-center gap-1 text-[#AAAAAA]">
+                    <span class="step-marker flex flex-col justify-center items-center w-6 h-6 bg-[#AAAAAA] rounded-full">
+                        
+                    </span>
+                    <span class="step-title">بيانات الحساب</span>
+                </li>
+                <li class="step-item flex flex-col justify-center items-center gap-1 text-[#AAAAAA]">
+                    <span class="step-marker flex flex-col justify-center items-center w-6 h-6 bg-[#AAAAAA] rounded-full">
+                        
+                    </span>
+                    <span class="step-title">التحقق من رقم الجوال</span>
+                </li>
+                <li class="step-item flex flex-col justify-center items-center gap-1 text-[#AAAAAA]">
+                    <span class="step-marker flex flex-col justify-center items-center w-6 h-6 bg-[#AAAAAA] rounded-full">
+                        
+                    </span>
+                    <span class="step-title">أهلًا بك</span>
+                </li>
+            </ol>
+
+            <form action="/sign-up" method="POST" class="form" id="login-form">
+                <!-- Step 1 -->
+                <section step="1" class="step-container flex gap-4 justify-around items-center my-4 min-h-[calc(100vh-400px)] max-lg:min-h-[80vh] max-lg:flex-col max-lg:justify-center">
+                    <section class="flex flex-col gap-4 w-[527px] max-sm:w-full rounded-2xl p-8 border border-border shadow-md">    
+                        <section class="space-y-4">
+                            <!-- email -->
+                            <div class="form-control" id="email-control">
+                                <label for="email" class="font-medium text-black required">البريد الإلكتروني للجهة</label>
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    id="email" 
+                                    placeholder="أدخل البريد الإلكتروني للجهة" 
+                                    required
+                                    class="input-field"
+                                >
+                                <p class="form-field-hint">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M8 1.33325C4.318 1.33325 1.33333 4.31892 1.33333 8.00025C1.33333 11.6816 4.318 14.6669 8 14.6669C11.6823 14.6669 14.6667 11.6816 14.6667 8.00025C14.6667 4.31892 11.6823 1.33325 8 1.33325ZM8 13.3333C5.05467 13.3333 2.66667 10.9453 2.66667 8.00025C2.66667 5.05592 5.05467 2.66792 8 2.66792C10.9453 2.66792 13.3333 5.05592 13.3333 8.00025C13.3333 10.9453 10.9453 13.3333 8 13.3333ZM7.33333 6.66659H8C8.36867 6.66659 8.66667 6.96459 8.66667 7.33325V10C8.66667 10.3687 8.36867 10.6666 8 10.6666H7.33333C6.96467 10.6666 6.66667 10.3687 6.66667 10V7.33325C6.66667 6.96459 6.96467 6.66659 7.33333 6.66659ZM8 5C7.63133 5 7.33333 5.298 C7.33333 5.66666C7.33333 6.03533C7.63133 6.33333C8 6.33333C8.36867 6.33333C8.66667 6 C8.66667 5.66666C8.66667 5.298 8.36867 5 8 5Z" fill="currentColor"/>
+                                    </svg>
+                                    يجب أن يكون البريد الإلكتروني الخاصُ بك صالحًا
+                                </p>
+                            </div>
+
+                            <!-- username -->
+                            <div class="form-control" id="username-control">
+                                <label for="username" class="font-medium text-black required">اسم المستخدم</label>
+                                <input 
+                                    type="text" 
+                                    name="username" 
+                                    id="username" 
+                                    placeholder="أدخل اسم المستخدم" 
+                                    required
+                                    class="input-field"
+                                >
+                            </div>
+
+                            <!-- phone -->
+                            <div class="form-control" id="phone-control">
+                                <label for="phone" class="font-medium text-black required">رقم الجوال</label>
+                                <section class="form-control-group">
+                                    <input 
+                                        type="tel" 
+                                        name="phone" 
+                                        id="phone" 
+                                        placeholder="أدخل رقم الجوال" 
+                                        required
+                                        class="placeholder:text-right border-l border-border"
+                                        maxlength="9"
+                                        inputmode="numeric"
+                                    >
+                                    <span class="text-forground w-fit"><bdi>+966</bdi></span>
+                                </section>
+                            </div>
+
+                            <!-- sex -->
+                            <div class="form-control">
+                                <label for="sex" class="font-medium text-black required">الجنس</label>
+                                <select name="sex" id="sex" class="input-field" required>
+                                    <option value="male">ذكر</option>
+                                    <option value="female">أنثى</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                            </div>
+
+                            <!-- passwords -->
+                            <div class="flex gap-2 max-sm:flex-col">
+                                <!-- password -->
+                                <div class="form-control">
+                                    <label for="password" class="font-medium text-black required">كلمة المرور الجديدة</label>
+                                    <section class="form-control-group">
+                                        <input 
+                                            type="password" 
+                                            name="password" 
+                                            id="password" 
+                                            placeholder="أدخل كلمة المرور" 
+                                            required
+                                        >
+                                        <button
+                                            tabindex="-1"
+                                            type="button"
+                                            id="show-password-btn"
+                                            class="text-forground w-fit p-1 hover:bg-main/10 hover:text-main rounded-md h-8 w-8!"
+                                        >
+                                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5 14.1083C8.50833 14.1083 6.89166 12.4916 6.89166 10.4999C6.89166 8.50827 8.50833 6.8916 10.5 6.8916C12.4917 6.8916 14.1083 8.50827 14.1083 10.4999C14.1083 12.4916 12.4917 14.1083 10.5 14.1083ZM10.5 8.1416C9.2 8.1416 8.14166 9.19993 8.14166 10.4999C8.14166 11.7999 9.2 12.8583 10.5 12.8583C11.8 12.8583 12.8583 11.7999 12.8583 10.4999C12.8583 9.19993 11.8 8.1416 10.5 8.1416Z" fill="#7C838C"/>
+                                                <path d="M10.5 18.0167C7.36666 18.0167 4.40833 16.1834 2.37499 13.0001C1.49166 11.6251 1.49166 9.3834 2.37499 8.00007C4.41666 4.81673 7.37499 2.9834 10.5 2.9834C13.625 2.9834 16.5833 4.81673 18.6167 8.00007C19.5 9.37507 19.5 11.6167 18.6167 13.0001C16.5833 16.1834 13.625 18.0167 10.5 18.0167ZM10.5 4.2334C7.80833 4.2334 5.23333 5.85007 3.43333 8.67507C2.80833 9.65007 2.80833 11.3501 3.43333 12.3251C5.23333 15.1501 7.80833 16.7667 10.5 16.7667C13.1917 16.7667 15.7667 15.1501 17.5667 12.3251C18.1917 11.3501 18.1917 9.65007 17.5667 8.67507C15.7667 5.85007 13.1917 4.2334 10.5 4.2334Z" fill="#7C838C"/>
+                                            </svg>
+                                        </button>
+                                    </section>
+                                    <p class="form-field-hint">
+                                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8 2C6.71442 2 5.45772 2.38122 4.3888 3.09545C3.31988 3.80968 2.48676 4.82484 1.99479 6.01256C1.50282 7.20028 1.37409 8.50721 1.6249 9.76809C1.8757 11.029 2.49477 12.1872 3.40381 13.0962C4.31285 14.0052 5.47104 14.6243 6.73192 14.8751C7.99279 15.1259 9.29973 14.9972 10.4874 14.5052C11.6752 14.0132 12.6903 13.1801 13.4046 12.1112C14.1188 11.0423 14.5 9.78558 14.5 8.5C14.4982 6.77665 13.8128 5.12441 12.5942 3.90582C11.3756 2.68722 9.72335 2.00182 8 2ZM8 14C6.91221 14 5.84884 13.6774 4.94437 13.0731C4.0399 12.4687 3.33495 11.6098 2.91867 10.6048C2.50238 9.59977 2.39347 8.4939 2.60568 7.427C2.8179 6.36011 3.34173 5.3801 4.11092 4.61091C4.8801 3.84172 5.86011 3.3179 6.92701 3.10568C7.9939 2.89346 9.09977 3.00238 10.1048 3.41866C11.1098 3.83494 11.9687 4.53989 12.5731 5.44436C13.1774 6.34883 13.5 7.4122 13.5 8.5C13.4983 9.95818 12.9184 11.3562 11.8873 12.3873C10.8562 13.4184 9.45819 13.9983 8 14ZM9 11.5C9 11.6326 8.94732 11.7598 8.85356 11.8536C8.75979 11.9473 8.63261 12 8.5 12C8.23479 12 7.98043 11.8946 7.7929 11.7071C7.60536 11.5196 7.5 11.2652 7.5 11V8.5C7.36739 8.5 7.24022 8.44732 7.14645 8.35355C7.05268 8.25979 7 8.13261 7 8C7 7.86739 7.05268 7.74021 7.14645 7.64645C7.24022 7.55268 7.36739 7.5 7.5 7.5C7.76522 7.5 8.01957 7.60536 8.20711 7.79289C8.39465 7.98043 8.5 8.23478 8.5 8.5V11C8.63261 11 8.75979 11.0527 8.85356 11.1464C8.94732 11.2402 9 11.3674 9 11.5ZM7 5.75C7 5.60166 7.04399 5.45666 7.1264 5.33332C7.20881 5.20999 7.32595 5.11386 7.46299 5.05709C7.60003 5.00032 7.75083 4.98547 7.89632 5.01441C8.04181 5.04335 8.17544 5.11478 8.28033 5.21967C8.38522 5.32456 8.45665 5.4582 8.48559 5.60368C8.51453 5.74917 8.49968 5.89997 8.44291 6.03701C8.38615 6.17406 8.29002 6.29119 8.16668 6.3736C8.04334 6.45601 7.89834 6.5 7.75 6.5C7.55109 6.5 7.36032 6.42098 7.21967 6.28033C7.07902 6.13968 7 5.94891 7 5.75Z" fill="currentColor"/>
+                                        </svg>
+                                        يجب أن تحتوي على أحرف وأرقام ورموز
+                                    </p>
+                                </div>
+
+                                <!-- password confirm -->
+                                <div class="form-control">
+                                    <label for="password-confirm" class="font-medium text-black required">تأكيد كلمة المرور الجديدة</label>
+                                    <section class="form-control-group">
+                                        <input 
+                                            type="password" 
+                                            name="password-confirm" 
+                                            id="password-confirm" 
+                                            placeholder="تأكيد كلمة المرور" 
+                                            required
+                                        >
+                                        <button
+                                            tabindex="-1"
+                                            type="button"
+                                            id="show-password-confirm-btn"
+                                            class="text-forground w-fit p-1 hover:bg-main/10 hover:text-main rounded-md h-8 w-8!"
+                                        >
+                                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.5 14.1083C8.50833 14.1083 6.89166 12.4916 6.89166 10.4999C6.89166 8.50827 8.50833 6.8916 10.5 6.8916C12.4917 6.8916 14.1083 8.50827 14.1083 10.4999C14.1083 12.4916 12.4917 14.1083 10.5 14.1083ZM10.5 8.1416C9.2 8.1416 8.14166 9.19993 8.14166 10.4999C8.14166 11.7999 9.2 12.8583 10.5 12.8583C11.8 12.8583 12.8583 11.7999 12.8583 10.4999C12.8583 9.19993 11.8 8.1416 10.5 8.1416Z" fill="#7C838C"/>
+                                                <path d="M10.5 18.0167C7.36666 18.0167 4.40833 16.1834 2.37499 13.0001C1.49166 11.6251 1.49166 9.3834 2.37499 8.00007C4.41666 4.81673 7.37499 2.9834 10.5 2.9834C13.625 2.9834 16.5833 4.81673 18.6167 8.00007C19.5 9.37507 19.5 11.6167 18.6167 13.0001C16.5833 16.1834 13.625 18.0167 10.5 18.0167ZM10.5 4.2334C7.80833 4.2334 5.23333 5.85007 3.43333 8.67507C2.80833 9.65007 2.80833 11.3501 3.43333 12.3251C5.23333 15.1501 7.80833 16.7667 10.5 16.7667C13.1917 16.7667 15.7667 15.1501 17.5667 12.3251C18.1917 11.3501 18.1917 9.65007 17.5667 8.67507C15.7667 5.85007 13.1917 4.2334 10.5 4.2334Z" fill="#7C838C"/>
+                                            </svg>
+                                        </button>
+                                    </section>
+                                    <p class="form-field-hint">
+                                        <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M8 2C6.71442 2 5.45772 2.38122 4.3888 3.09545C3.31988 3.80968 2.48676 4.82484 1.99479 6.01256C1.50282 7.20028 1.37409 8.50721 1.6249 9.76809C1.8757 11.029 2.49477 12.1872 3.40381 13.0962C4.31285 14.0052 5.47104 14.6243 6.73192 14.8751C7.99279 15.1259 9.29973 14.9972 10.4874 14.5052C11.6752 14.0132 12.6903 13.1801 13.4046 12.1112C14.1188 11.0423 14.5 9.78558 14.5 8.5C14.4982 6.77665 13.8128 5.12441 12.5942 3.90582C11.3756 2.68722 9.72335 2.00182 8 2ZM8 14C6.91221 14 5.84884 13.6774 4.94437 13.0731C4.0399 12.4687 3.33495 11.6098 2.91867 10.6048C2.50238 9.59977 2.39347 8.4939 2.60568 7.427C2.8179 6.36011 3.34173 5.3801 4.11092 4.61091C4.8801 3.84172 5.86011 3.3179 6.92701 3.10568C7.9939 2.89346 9.09977 3.00238 10.1048 3.41866C11.1098 3.83494 11.9687 4.53989 12.5731 5.44436C13.1774 6.34883 13.5 7.4122 13.5 8.5C13.4983 9.95818 12.9184 11.3562 11.8873 12.3873C10.8562 13.4184 9.45819 13.9983 8 14ZM9 11.5C9 11.6326 8.94732 11.7598 8.85356 11.8536C8.75979 11.9473 8.63261 12 8.5 12C8.23479 12 7.98043 11.8946 7.7929 11.7071C7.60536 11.5196 7.5 11.2652 7.5 11V8.5C7.36739 8.5 7.24022 8.44732 7.14645 8.35355C7.05268 8.25979 7 8.13261 7 8C7 7.86739 7.05268 7.74021 7.14645 7.64645C7.24022 7.55268 7.36739 7.5 7.5 7.5C7.76522 7.5 8.01957 7.60536 8.20711 7.79289C8.39465 7.98043 8.5 8.23478 8.5 8.5V11C8.63261 11 8.75979 11.0527 8.85356 11.1464C8.94732 11.2402 9 11.3674 9 11.5ZM7 5.75C7 5.60166 7.04399 5.45666 7.1264 5.33332C7.20881 5.20999 7.32595 5.11386 7.46299 5.05709C7.60003 5.00032 7.75083 4.98547 7.89632 5.01441C8.04181 5.04335 8.17544 5.11478 8.28033 5.21967C8.38522 5.32456 8.45665 5.4582 8.48559 5.60368C8.51453 5.74917 8.49968 5.89997 8.44291 6.03701C8.38615 6.17406 8.29002 6.29119 8.16668 6.3736C8.04334 6.45601 7.89834 6.5 7.75 6.5C7.55109 6.5 7.36032 6.42098 7.21967 6.28033C7.07902 6.13968 7 5.94891 7 5.75Z" fill="currentColor"/>
+                                        </svg>
+                                        يجب أن تطابق كلمة المرور الجديدة
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-center">
+                                <a href="/signup.html" class="text-main font-medium px-4 w-fit">العودة للخلف</a>
+                                <button 
+                                    type="button" 
+                                    class="
+                                        btn bg-main text-white hover:bg-main/80
+                                        disabled:bg-main/20 disabled:text-main/60 
+                                        font-medium shadow-main/20 shadow-sm
+                                        min-w-[unset]! flex-grow
+                                    "
+                                    id="next-btn-1"
+                                    
+                                >
+                                    التالي
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="text-center">
+                            <p class="text-forground [&>a]:text-black [&>a]:underline text-sm">
+                                من خلال  المتابعة، أنت توافق على <a href="#">الشروط و الأحكام</a> و <a href="#">سياسة الخصوصية</a>
+                            </p>
+
+                            <p class="mt-4">
+                                مسجل معنا بالفعل؟ <a href="/index.html" class="text-main">تسجيل الدخول</a>
+                            </p>
+                        </section>
+                    </section>
+                </section>
+
+                <!-- Step 2 -->
+                <section step="2" class="step-container flex gap-4 justify-around items-center my-4 min-h-[calc(100vh-400px)] max-lg:min-h-[80vh] max-lg:flex-col max-lg:justify-center">
+                    <section class="flex flex-col gap-4 w-[527px] max-sm:w-full rounded-2xl p-8 border border-border shadow-md">    
+                        <section class="space-y-4">
+                            <!-- photo -->
+                            <div class="form-control" id="photo-control">
+                                <div id="photo-container" class="relative w-27 h-27 bg-main/10 rounded-full mx-auto flex flex-col items-center justify-center text-main shadow">
+                                    <svg class="w-8 h-8" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M10.5 10.6251C7.85837 10.6251 5.70837 8.47508 5.70837 5.83341C5.70837 3.19175 7.85837 1.04175 10.5 1.04175C13.1417 1.04175 15.2917 3.19175 15.2917 5.83341C15.2917 8.47508 13.1417 10.6251 10.5 10.6251ZM10.5 2.29175C8.55004 2.29175 6.95837 3.88341 6.95837 5.83341C6.95837 7.78341 8.55004 9.37508 10.5 9.37508C12.45 9.37508 14.0417 7.78341 14.0417 5.83341C14.0417 3.88341 12.45 2.29175 10.5 2.29175Z" fill="currentColor"/>
+                                        <path d="M17.6585 18.9583C17.3168 18.9583 17.0335 18.675 17.0335 18.3333C17.0335 15.4583 14.1001 13.125 10.5001 13.125C6.90013 13.125 3.9668 15.4583 3.9668 18.3333C3.9668 18.675 3.68346 18.9583 3.3418 18.9583C3.00013 18.9583 2.7168 18.675 2.7168 18.3333C2.7168 14.775 6.20846 11.875 10.5001 11.875C14.7918 11.875 18.2835 14.775 18.2835 18.3333C18.2835 18.675 18.0001 18.9583 17.6585 18.9583Z" fill="currentColor"/>
+                                    </svg>
+
+                                    <img src="" alt="photo" class="hidden w-full h-full rounded-full object-cover">
+
+                                    <button type="button" class="
+                                        bg-main w-8 h-8 rounded-full flex shadow-sm hover:bg-main/80
+                                        items-center justify-center absolute bottom-0 right-0" 
+                                        id="photo-btn"
+                                    >
+                                        <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12.4999 4.19221C12.0933 4.19221 11.7199 3.94767 11.5333 3.57038L11.0533 2.55728C10.7466 1.92148 9.94662 1.39746 9.26662 1.39746H7.73995C7.05328 1.39746 6.25328 1.92148 5.94662 2.55728L5.46662 3.57038C5.27995 3.94767 4.90662 4.19221 4.49995 4.19221C3.05328 4.19221 1.90662 5.4708 1.99995 6.97996L2.34662 12.7511C2.42662 14.1904 3.16662 15.3712 5.00662 15.3712H11.9933C13.8333 15.3712 14.5666 14.1904 14.6533 12.7511L14.9999 6.97996C15.0933 5.4708 13.9466 4.19221 12.4999 4.19221ZM7.49995 5.06556H9.49995C9.77328 5.06556 9.99995 5.30312 9.99995 5.58958C9.99995 5.87604 9.77328 6.11359 9.49995 6.11359H7.49995C7.22662 6.11359 6.99995 5.87604 6.99995 5.58958C6.99995 5.30312 7.22662 5.06556 7.49995 5.06556ZM8.49995 12.6603C7.25995 12.6603 6.24662 11.6053 6.24662 10.2987C6.24662 8.99218 7.25328 7.93716 8.49995 7.93716C9.74662 7.93716 10.7533 8.99218 10.7533 10.2987C10.7533 11.6053 9.73995 12.6603 8.49995 12.6603Z" fill="white"/>
+                                        </svg>
+                                    </button>
+
+                                    <input type="file" id="photo" class="hidden" accept="image/*">
+                                </div>
+
+                                <p class="text-center mt-2">
+                                    صورة شعار الجهة <span class="text-secondary-foreground">(إختياري)</span>
+                                </p>
+                            </div>
+
+                            <!-- company type -->
+                            <div class="form-control w-full" id="company-type-control">
+                                <label for="company-type" class="font-medium text-black required">نوع الجهة</label>
+                                <select 
+                                    type="text" 
+                                    name="company-type" 
+                                    id="company-type" 
+                                    placeholder="أختر نوع الجهة" 
+                                    required
+                                    class="input-field"
+                                >
+                                    <option value="ryiadh">رياض</option>
+                                    <option value="makkah">مكة المكرمة</option>
+                                    <option value="madinah">المدينة المنورة</option>
+                                </select>
+                            </div>
+
+                            <!-- company name -->
+                            <div class="form-control" id="company-name-control">
+                                <label for="company-name" class="font-medium text-black required">اسم الجهة</label>
+                                <input 
+                                    type="text" 
+                                    name="company-name" 
+                                    id="company-name" 
+                                    placeholder="أدخل اسم الجهة" 
+                                    required
+                                    class="input-field"
+                                >
+                            </div>
+
+                            <!-- ministerial number -->
+                            <div class="form-control" id="ministerial-number-control">
+                                <label for="ministerial-number" class="font-medium text-black required">الرقم الوزاري</label>
+                                <input 
+                                    type="number" 
+                                    name="ministerial-number" 
+                                    id="ministerial-number" 
+                                    placeholder="ادخل الرقم الوزاري للجهة" 
+                                    required
+                                    class="input-field"
+                                    inputmode="numeric"
+                                >
+                            </div>
+
+                            <div class="flex gap-2 max-sm:flex-col">
+                                <!-- city -->
+                                <div class="form-control w-full" id="city-control">
+                                    <label for="city" class="font-medium text-black">المدينة</label>
+                                    <select 
+                                        type="text" 
+                                        name="city" 
+                                        id="city" 
+                                        placeholder="أختر مدينتك" 
+                                        required
+                                        class="input-field"
+                                    >
+                                        <option value="ryiadh">رياض</option>
+                                        <option value="makkah">مكة المكرمة</option>
+                                        <option value="madinah">المدينة المنورة</option>
+                                    </select>
+                                </div>
+
+                                <!-- region -->
+                                <div class="form-control w-full" id="region-control">
+                                    <label for="region" class="font-medium text-black">المنطقة</label>
+                                    <select 
+                                        type="text" 
+                                        name="region" 
+                                        id="region" 
+                                        placeholder="أختر منطقتك" 
+                                        required
+                                        class="input-field"
+                                    >
+                                        <option value="ryiadh">رياض</option>
+                                        <option value="makkah">مكة المكرمة</option>
+                                        <option value="madinah">المدينة المنورة</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-control" id="document-control">
+                                <label for="document-id" class="font-medium text-black required">إرفاق السجل التجاري</label>
+                                <button type="button" class="
+                                    border border-border hover:border-main border-dashed
+                                    w-full rounded-2xl flex flex-col justify-center
+                                    items-center gap-2 text-sm font-medium p-6
+                                " id="drop-area">
+                                    <div class="w-11 h-11 bg-secondary/15 rounded-full flex flex-col justify-center items-center shadow">
+                                        <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M11.5 0.0185547C17.4371 0.0185547 22.25 4.83149 22.25 10.7686C22.25 16.7056 17.4371 21.5186 11.5 21.5186C5.56294 21.5186 0.75 16.7056 0.75 10.7686C0.75 4.83149 5.56294 0.0185547 11.5 0.0185547ZM11.5 8.76855C11.0052 8.76855 10.6412 9.00524 10.3955 9.21289C10.1789 9.39599 9.9505 9.64768 9.73047 9.8916L9.05957 10.6357L9.0459 10.6504C8.99732 10.7039 8.90081 10.8103 8.8291 10.917C8.76462 11.013 8.482 11.4525 8.71973 11.9873C8.9575 12.5219 9.47246 12.6066 9.58691 12.623C9.71434 12.6414 9.85842 12.6409 9.93066 12.6406H10.5V15.7686C10.5 16.3208 10.9477 16.7686 11.5 16.7686C12.0523 16.7686 12.5 16.3208 12.5 15.7686V12.6406H13.0693C13.1416 12.6409 13.2857 12.6414 13.4131 12.623C13.5275 12.6066 14.0425 12.5219 14.2803 11.9873C14.518 11.4525 14.2354 11.013 14.1709 10.917C14.0992 10.8103 14.0027 10.7039 13.9541 10.6504L13.9404 10.6357L13.2695 9.8916C13.0495 9.64768 12.8211 9.39599 12.6045 9.21289C12.3588 9.00524 11.9948 8.76855 11.5 8.76855ZM8.5 4.76855C7.94772 4.76855 7.5 5.21627 7.5 5.76855C7.5 6.32084 7.94772 6.76855 8.5 6.76855H14.5C15.0523 6.76855 15.5 6.32084 15.5 5.76855C15.5 5.21627 15.0523 4.76855 14.5 4.76855H8.5Z" fill="#DF6235"/>
+                                        </svg>
+                                    </div>
+                                    <p>
+                                        <span class="text-main">انقر هنا</span>
+                                        أو قم بالسحب والإفلات
+                                    </p>
+                                    <p>صيغ الملفات المدعومة : Jpg , png , pdf</p>
+                                    <p>أقصى حجم للملف 2 م.ب</p>
+
+                                    <input type="file" id="document" class="hidden" accept="image/*">
+                                </button>
+                                <section class="file-container mt-2 space-y-2"></section>
+                            </div>
+
+                            <div class="flex items-center justify-center">
+                                <button type="button" id="back-btn-2" class="text-main font-medium px-4 w-fit">العودة للخلف</button>
+                                <button 
+                                    type="button" 
+                                    class="
+                                        btn bg-main text-white hover:bg-main/80
+                                        disabled:bg-main/20 disabled:text-main/60 
+                                        font-medium shadow-main/20 shadow-sm
+                                        min-w-[unset]! flex-grow
+                                    "
+                                    id="next-btn-2"
+                                >
+                                    التالي
+                                </button>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+
+                <!-- Step 3 -->
+                <section step="3" class="step-container flex gap-4 justify-around items-center my-4 min-h-[calc(100vh-500px)] max-lg:min-h-[80vh] max-lg:flex-col max-lg:justify-center">
+                    <section class="flex flex-col gap-4 w-[527px] max-sm:w-full rounded-2xl p-8 border border-border shadow-md">
+                        <header class="text-center">
+                            <h1 class="font-semibold text-black text-[32px]">التحقق من رقم الجوال</h1>
+                            <p class="text-secondary-foreground">
+                                يرجى إدخال رمز التحقق المرسل إلى رقم الجوال 55464***** لاستكمال عملية إنشاء حساب
+                            </p>
+                        </header>
+
+                        <form action="#login" method="POST" class="form" id="login-form">
+                            <div class="flex space-x-2 justify-center" dir="ltr" id="otp-inputs">
+                                <input type="text" maxlength="1" inputmode="numeric" class="input-field text-center w-10! placeholder:text-center" placeholder="-" autofocus />
+                                <input type="text" maxlength="1" inputmode="numeric" class="input-field text-center w-10! placeholder:text-center" placeholder="-" />
+                                <input type="text" maxlength="1" inputmode="numeric" class="input-field text-center w-10! placeholder:text-center" placeholder="-" />
+                                <input type="text" maxlength="1" inputmode="numeric" class="input-field text-center w-10! placeholder:text-center" placeholder="-" />
+                            </div>
+
+                            <div>
+                                <button 
+                                    type="button" 
+                                    class="btn bg-main text-white hover:bg-main/80 disabled:bg-main/20 disabled:text-main/60 font-medium"
+                                    id="next-btn-3"
+                                    disabled
+                                >
+                                    إنشاء حساب
+                                </button>
+                            </div>
+                        </form>
+
+                        <p class="text-center text-black font-medium">
+                            صلاحية الرمز تنتهي بعد 
+                            <span class="font-semibold text-black" id="time-container">00:00</span>
+                            <span class="font-semibold text-black">دقيقة</span>
+                        </p>
+
+                        <p class="text-black text-center font-medium">
+                            لم يصلك رمز التحقق على رقم الجوال ؟
+                            <button class="text-secondary-foreground hover:text-main font-medium" id="resend-btn">
+                                إعادة الإرسال
+                            </button>
+                        </p>
+                    </section>
+                </section>
+
+                <!-- Step 4 -->
+                <section step="4" class="step-container flex gap-4 justify-around items-center my-4 min-h-[calc(100vh-500px)] max-lg:min-h-[80vh] max-lg:flex-col max-lg:justify-center">
+                    <section class="flex flex-col gap-4 w-[527px] max-sm:w-full rounded-2xl p-8 border border-border shadow-md">
+                        <header class="text-center">
+                            <h1 class="font-semibold text-black text-[32px]">تم إنشاء حسابك بنجاح!</h1>
+                            <p class="text-secondary-foreground">
+                                حسابك أصبح جاهزاً، يمكنك الآن البدء في إرسال رسائلك وإدارة تواصلك.
+                            </p>
+                        </header>
+
+                        <div>
+                            <button
+                                class="btn bg-main text-white hover:bg-main/80 disabled:bg-main/20 disabled:text-main/60 font-medium"
+                            >
+                                <a href="./index.html" class="block">
+                                    ابدأ الأن
+                                </a>
+                            </button>
+                        </div>
+                    </section>
+                </section>
+            </form>
+        </main>
+
+        <script type="module" src="./public/js/auth/create-individual-account.js"></script>
+    </body>
+</html>
