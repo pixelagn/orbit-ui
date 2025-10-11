@@ -21,8 +21,6 @@ const toggleBtns = document.querySelectorAll("#toggle-btns button");
 const phoneControl = document.getElementById("phone-control");
 const usernameControl = document.getElementById("username-control");
 
-console.log(usernameControl);
-
 usernameControl.classList.add("hidden!");
 
 toggleBtns.forEach((btn) => {
@@ -96,5 +94,11 @@ usernameInput.addEventListener("input", (e) => {
         submitBtn.disabled = false;
     } else {
         submitBtn.disabled = true;
+    }
+});
+
+submitBtn.addEventListener("click", () => {
+    if (phoneInput.value.length > 0) {
+        location.href = `/groups.html`;
     }
 });

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>المدار</title>
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="public/orbit-icon.png" type="image/x-icon">
+
+        <!-- Styles -->
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <style type="text/tailwindcss">
+            @theme {
+                --color-main: var(--main);
+                --color-secondary: var(--secondary);
+                --color-background: var(--background);
+                --color-forground: var(--forground);
+                --color-black: var(--black);
+                --color-border: var(--border);
+                --font-medium: 'IBM Plex Sans Arabic Medium'
+                --color-error: var(--error);
+                --color-warning: var(--warning);
+                --color-success: var(--success);
+                --color-secondary-foreground: var(--secondary-foreground);
+            }
+
+            button {
+                cursor: pointer;
+            }
+
+            a:not(button a) {
+                @apply hover:text-main/80 cursor-pointer;
+            }
+
+            button:hover,
+            a:hover {
+                transition: all 0.3s ease-in-out;
+            }
+
+            i.icon {
+                line-height: 0;
+            }
+
+            .btn {
+                @apply py-2 px-4 font-medium flex items-center 
+                justify-center gap-1 rounded-2xl min-w-full;
+            }
+
+            .btn-lg {
+                @apply min-w-[146px] max-sm:min-w-[123px] h-[45px] py-2 px-4 font-medium
+                rounded-2xl;
+            }
+
+            .btn-lg.active {
+                @apply bg-white shadow-lg;
+            }
+
+            /* Form ------------------------------------------------------------------- */
+            .form {
+                @apply flex flex-col gap-4;
+            }
+
+            .form-control {
+                @apply flex flex-col gap-1;
+            }
+
+            .form-control-group {
+                @apply h-10 border border-border rounded-lg p-2 
+                focus:outline-none focus:border-main
+                flex items-center gap-2 justify-between;
+            }
+
+            .form-control-group input {
+                @apply focus:outline-none w-full px-2;
+            }
+
+            .input-field {
+                @apply h-10 border border-border rounded-lg p-2 px-4 
+                focus:outline-none focus:border-main;
+            }
+
+            .checkbox-field {
+                @apply h-4 w-4 border border-border rounded-lg;
+            }
+
+            .checkbox-control {
+                @apply flex items-center gap-2;
+                accent-color: var(--main);
+            }
+
+            label.required::after {
+                content: "*";
+                color: var(--error);
+                font-size: 0.8rem;
+                margin: 0 0.25rem;
+            }
+
+            .form-field-hint {
+                @apply text-secondary-foreground text-sm
+                flex items-center gap-1
+            }
+
+            /* Breadcrumbs ------------------------------------------------------------ */
+            .breadcrumbs-list {
+                @apply flex items-center gap-2 text-secondary-foreground text-sm
+            }
+
+            .breadcrumbs-list .breadcrumbs-item {
+                @apply flex items-center gap-2
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:not(.breadcrumbs-list .breadcrumbs-item:last-child)::after {
+                content: url("/public/icons/light/CaretLeft.svg");
+            }
+
+            .breadcrumbs-list .breadcrumbs-item:last-child {
+                @apply text-black font-medium
+            }
+
+            /* text with line */
+            .text-with-line {
+                position: relative;
+            }
+
+            .text-with-line::after,
+            .text-with-line::before {
+                content: "";
+                display: inline-block;
+                width: 20%;
+                height: 1px;
+                background-color: var(--border);
+                margin: 0 1rem;
+                vertical-align: middle;
+                @apply max-sm:w-4
+            }
+        </style>
+
+        <link rel="stylesheet" href="./public/styles/index.css">
+    </head>
+
+    <body class="py-4 px-[2.5%]">
+        <button data-drawer-target="sidebar-multi-level-sidebar" data-drawer-toggle="sidebar-multi-level-sidebar" aria-controls="sidebar-multi-level-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-main focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+            <span class="sr-only">Open sidebar</span>
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+            </svg>
+        </button>
+
+        <aside id="sidebar-multi-level-sidebar" class="fixed top-0 right-0 z-40 w-74 h-screen transition-transform -translate-x-full sm:translate-x-0 font-sans!" aria-label="Sidebar">
+            <div class="h-full px-5 py-6 overflow-y-auto bg-black dark:bg-gray-800">
+                <div class="mb-5">
+                    <img src="./public/orbit-logo.png" alt="المدار" class="w-[171px]">
+                </div>
+                <ul class="space-y-2 font-medium">
+                    <li>
+                        <a href="#" class="flex items-center py-3 px-4 text-white! rounded-2xl hover:bg-main group">
+                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M6.03317 2.52344H4.44984C2.62484 2.52344 1.6665 3.48177 1.6665 5.29844V6.88177C1.6665 8.69844 2.62484 9.65677 4.4415 9.65677H6.02484C7.8415 9.65677 8.79984 8.69844 8.79984 6.88177V5.29844C8.80817 3.48177 7.84984 2.52344 6.03317 2.52344Z" fill="currentColor"/>
+                                <path d="M15.5585 2.52344H13.9752C12.1585 2.52344 11.2002 3.48177 11.2002 5.29844V6.88177C11.2002 8.69844 12.1585 9.65677 13.9752 9.65677H15.5585C17.3752 9.65677 18.3335 8.69844 18.3335 6.88177V5.29844C18.3335 3.48177 17.3752 2.52344 15.5585 2.52344Z" fill="currentColor"/>
+                                <path d="M15.5585 12.0479H13.9752C12.1585 12.0479 11.2002 13.0062 11.2002 14.8229V16.4062C11.2002 18.2229 12.1585 19.1812 13.9752 19.1812H15.5585C17.3752 19.1812 18.3335 18.2229 18.3335 16.4062V14.8229C18.3335 13.0062 17.3752 12.0479 15.5585 12.0479Z" fill="currentColor"/>
+                                <path d="M6.03317 12.0479H4.44984C2.62484 12.0479 1.6665 13.0062 1.6665 14.8229V16.4062C1.6665 18.2312 2.62484 19.1895 4.4415 19.1895H6.02484C7.8415 19.1895 8.79984 18.2312 8.79984 16.4145V14.8312C8.80817 13.0062 7.84984 12.0479 6.03317 12.0479Z" fill="currentColor"/>
+                            </svg>
+                            <span class="ms-3">لوحة التحكم</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="flex items-center py-3 px-4 text-white! rounded-2xl bg-main group">
+                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7.63314 10.5401C7.60814 10.5401 7.59147 10.5401 7.56647 10.5401C7.52481 10.5318 7.46647 10.5318 7.41647 10.5401C4.9998 10.4651 3.1748 8.5651 3.1748 6.22344C3.1748 3.8401 5.11647 1.89844 7.4998 1.89844C9.88314 1.89844 11.8248 3.8401 11.8248 6.22344C11.8165 8.5651 9.98314 10.4651 7.65814 10.5401C7.6498 10.5401 7.64147 10.5401 7.63314 10.5401ZM7.4998 3.14844C5.80814 3.14844 4.4248 4.53177 4.4248 6.22344C4.4248 7.8901 5.7248 9.23177 7.38314 9.2901C7.43314 9.28177 7.54147 9.28177 7.64981 9.2901C9.28314 9.2151 10.5665 7.87344 10.5748 6.22344C10.5748 4.53177 9.19147 3.14844 7.4998 3.14844Z" fill="currentColor"/>
+                                <path d="M13.783 10.6478C13.758 10.6478 13.733 10.6478 13.708 10.6395C13.3663 10.6728 13.0163 10.4311 12.983 10.0895C12.9496 9.74779 13.158 9.43945 13.4996 9.39779C13.5996 9.38945 13.708 9.38945 13.7996 9.38945C15.0163 9.32279 15.9663 8.32279 15.9663 7.09779C15.9663 5.83112 14.9413 4.80612 13.6746 4.80612C13.333 4.81445 13.0496 4.53112 13.0496 4.18945C13.0496 3.84779 13.333 3.56445 13.6746 3.56445C15.6246 3.56445 17.2163 5.15612 17.2163 7.10612C17.2163 9.02279 15.7163 10.5728 13.808 10.6478C13.7996 10.6478 13.7913 10.6478 13.783 10.6478Z" fill="currentColor"/>
+                                <path d="M7.64134 19.6478C6.00801 19.6478 4.36634 19.2311 3.12467 18.3978C1.96634 17.6311 1.33301 16.5811 1.33301 15.4395C1.33301 14.2978 1.96634 13.2395 3.12467 12.4645C5.62467 10.8061 9.67467 10.8061 12.158 12.4645C13.308 13.2311 13.9497 14.2811 13.9497 15.4228C13.9497 16.5645 13.3163 17.6228 12.158 18.3978C10.908 19.2311 9.27467 19.6478 7.64134 19.6478ZM3.81634 13.5145C3.01634 14.0478 2.58301 14.7311 2.58301 15.4478C2.58301 16.1561 3.02467 16.8395 3.81634 17.3645C5.89134 18.7561 9.39134 18.7561 11.4663 17.3645C12.2663 16.8311 12.6997 16.1478 12.6997 15.4311C12.6997 14.7228 12.258 14.0395 11.4663 13.5145C9.39134 12.1311 5.89134 12.1311 3.81634 13.5145Z" fill="currentColor"/>
+                                <path d="M15.283 18.1481C14.9913 18.1481 14.733 17.9481 14.6746 17.6481C14.608 17.3065 14.8246 16.9815 15.158 16.9065C15.683 16.7981 16.1663 16.5898 16.5413 16.2981C17.0163 15.9398 17.2746 15.4898 17.2746 15.0148C17.2746 14.5398 17.0163 14.0898 16.5496 13.7398C16.183 13.4565 15.7246 13.2565 15.183 13.1315C14.8496 13.0565 14.633 12.7231 14.708 12.3815C14.783 12.0481 15.1163 11.8315 15.458 11.9065C16.1746 12.0648 16.7996 12.3481 17.308 12.7398C18.083 13.3231 18.5246 14.1481 18.5246 15.0148C18.5246 15.8815 18.0746 16.7065 17.2996 17.2981C16.783 17.6981 16.133 17.9898 15.4163 18.1315C15.3663 18.1481 15.3246 18.1481 15.283 18.1481Z" fill="currentColor"/>
+                            </svg>
+                            <span class="ms-3">المجموعات</span>
+                        </a>
+                    </li>
+        
+                    <li>
+                        <button type="button" class="flex items-center w-full p-2 text-base text-white transition duration-75 rounded-lg group hover:bg-main dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
+                            <svg class="shrink-0 w-5 h-5 transition duration-75  dark:text-gray-40" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+                                <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
+                            </svg>
+                            <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">E-commerce</span>
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+                        <ul id="dropdown-example" class="hidden py-2 space-y-2">
+                            <li>
+                                <a href="#" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-main dark:text-white dark:hover:bg-gray-700">Products</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-main dark:text-white dark:hover:bg-gray-700">Billing</a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center w-full p-2 text-white transition duration-75 rounded-lg pl-11 group hover:bg-main dark:text-white dark:hover:bg-gray-700">Invoice</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <div class="p-4 sm:mr-64">
+            <header>
+                <section class="flex items-center justify-between gap-4">
+                    <h1 class="text-[32px] font-semibold">المجموعات</h1>
+
+                    <section class="flex gap-4">
+                        <button class="flex items-center gap-2 rounded-2xl bg-main hover:bg-main/80 px-4 py-2 text-white h-12">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.99984 18.9587C5.05817 18.9587 1.0415 14.942 1.0415 10.0003C1.0415 5.05866 5.05817 1.04199 9.99984 1.04199C14.9415 1.04199 18.9582 5.05866 18.9582 10.0003C18.9582 14.942 14.9415 18.9587 9.99984 18.9587ZM9.99984 2.29199C5.74984 2.29199 2.2915 5.75033 2.2915 10.0003C2.2915 14.2503 5.74984 17.7087 9.99984 17.7087C14.2498 17.7087 17.7082 14.2503 17.7082 10.0003C17.7082 5.75033 14.2498 2.29199 9.99984 2.29199Z" fill="currentColor"/>
+                                <path d="M13.3332 10.625H6.6665C6.32484 10.625 6.0415 10.3417 6.0415 10C6.0415 9.65833 6.32484 9.375 6.6665 9.375H13.3332C13.6748 9.375 13.9582 9.65833 13.9582 10C13.9582 10.3417 13.6748 10.625 13.3332 10.625Z" fill="currentColor"/>
+                                <path d="M10 13.9587C9.65833 13.9587 9.375 13.6753 9.375 13.3337V6.66699C9.375 6.32533 9.65833 6.04199 10 6.04199C10.3417 6.04199 10.625 6.32533 10.625 6.66699V13.3337C10.625 13.6753 10.3417 13.9587 10 13.9587Z" fill="currentColor"/>
+                            </svg>
+
+                            إضافة مجموعة
+                        </button>
+
+                        <button class="flex items-center gap-2 rounded-2xl border border-main hover:border-main/80 text-main hover:text-main/80 px-4 py-2 h-12">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.99984 18.9587C5.05817 18.9587 1.0415 14.942 1.0415 10.0003C1.0415 5.05866 5.05817 1.04199 9.99984 1.04199C14.9415 1.04199 18.9582 5.05866 18.9582 10.0003C18.9582 14.942 14.9415 18.9587 9.99984 18.9587ZM9.99984 2.29199C5.74984 2.29199 2.2915 5.75033 2.2915 10.0003C2.2915 14.2503 5.74984 17.7087 9.99984 17.7087C14.2498 17.7087 17.7082 14.2503 17.7082 10.0003C17.7082 5.75033 14.2498 2.29199 9.99984 2.29199Z" fill="currentColor"/>
+                                <path d="M13.3332 10.625H6.6665C6.32484 10.625 6.0415 10.3417 6.0415 10C6.0415 9.65833 6.32484 9.375 6.6665 9.375H13.3332C13.6748 9.375 13.9582 9.65833 13.9582 10C13.9582 10.3417 13.6748 10.625 13.3332 10.625Z" fill="currentColor"/>
+                                <path d="M10 13.9587C9.65833 13.9587 9.375 13.6753 9.375 13.3337V6.66699C9.375 6.32533 9.65833 6.04199 10 6.04199C10.3417 6.04199 10.625 6.32533 10.625 6.66699V13.3337C10.625 13.6753 10.3417 13.9587 10 13.9587Z" fill="currentColor"/>
+                            </svg>
+
+                            إضافة رقم
+                        </button>
+                    </section>
+                </section>
+                <p class="mt-4 text-lg">
+                    إدارة جميع مجموعات الأرقام الخاصة بك في مكان واحد، مع إمكانية الإضافة، التعديل، والاستيراد أو التصدير بسهولة.
+                </p>
+            </header>
+
+            <section class="mt-8">
+                <section class="flex items-center gap-2">
+                    <div class="form-control flex-1" id="phone-control">
+                        <section class="form-control-group">
+                            <span class="text-forground w-fit"><bdi>+966</bdi></span>
+                            <input 
+                                type="search" 
+                                name="search" 
+                                id="search" 
+                                placeholder="بحث باسم المجموعة"
+                            >
+                        </section>
+                    </div>
+
+                    <div class="form-control flex-1 min-w-[300px]!" id="phone-control">
+                        <section class="form-control-group">
+                            <span class="text-forground w-fit"><bdi>+966</bdi></span>
+                            <input 
+                                type="date" 
+                                name="date" 
+                                id="date" 
+                                placeholder="تاريخ إنشاء المجموعة"
+                            >
+                        </section>
+                    </div>
+
+                    <section class="">
+                        <button class="w-10 h-10 rounded-xl flex items-center justify-center bg-main hover:bg-main/80 px-4 py-2 text-white">
+                            <h1>+</h1>
+                        </button>
+                    </section>
+                </section>
+            </section>
+        </div>
+    </body>
+</html>
