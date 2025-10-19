@@ -209,7 +209,7 @@
                     <h1 class="text-[32px] font-semibold text-black">المجموعات</h1>
 
                     <section class="flex gap-4">
-                        <button class="flex items-center gap-2 rounded-2xl bg-main hover:bg-main/80 hover:text-white px-4 py-2 text-white h-12">
+                        <button id="add-group-btn" class="flex items-center gap-2 rounded-2xl bg-main hover:bg-main/80 hover:text-white px-4 py-2 text-white h-12" data-modal-target="add-group-modal" data-modal-toggle="add-group-modal">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.99984 18.9587C5.05817 18.9587 1.0415 14.942 1.0415 10.0003C1.0415 5.05866 5.05817 1.04199 9.99984 1.04199C14.9415 1.04199 18.9582 5.05866 18.9582 10.0003C18.9582 14.942 14.9415 18.9587 9.99984 18.9587ZM9.99984 2.29199C5.74984 2.29199 2.2915 5.75033 2.2915 10.0003C2.2915 14.2503 5.74984 17.7087 9.99984 17.7087C14.2498 17.7087 17.7082 14.2503 17.7082 10.0003C17.7082 5.75033 14.2498 2.29199 9.99984 2.29199Z" fill="currentColor"/>
                                 <path d="M13.3332 10.625H6.6665C6.32484 10.625 6.0415 10.3417 6.0415 10C6.0415 9.65833 6.32484 9.375 6.6665 9.375H13.3332C13.6748 9.375 13.9582 9.65833 13.9582 10C13.9582 10.3417 13.6748 10.625 13.3332 10.625Z" fill="currentColor"/>
@@ -265,7 +265,7 @@
                                         <button data-modal-hide="confirm-delete" class="w-10 h-10 rounded-xl flex items-center justify-center bg-error hover:bg-error/80 text-white w-full" data-modal-target="confirm-delete" data-modal-toggle="confirm-delete">
                                             حذف
                                         </button>
-                                        <button data-modal-hide="confirm-delete" class="w-10 h-10 rounded-xl flex items-center justify-center bg-border w-full" data-modal-target="confirm-delete" data-modal-toggle="confirm-delete">
+                                        <button data-modal-hide="confirm-delete" class="w-10 h-10 rounded-xl flex items-center justify-center bg-[#F2F3F4] hover:bg-border w-full" data-modal-target="confirm-delete" data-modal-toggle="confirm-delete">
                                             إلغاء
                                         </button>
                                     </div>
@@ -1314,10 +1314,92 @@
                     للأسف، لم نتمكن من العثور على أي نتائج تطابق بحثك. يرجى التحقق من التهجئة الصحيحة وتجربة كلمات أخرى ذات صلة
                 </p>
             </section> -->
+
+            <!-- Add Group -->
+            <div id="add-group-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative p-4 w-full max-w-[731px] max-h-full">
+                    <div class="relative bg-white rounded-2xl shadow-sm dark:bg-gray-700 p-8">
+                        <header>
+                            <h1 class="font-semibold text-xl text-center">إضافة المجموعة</h1>
+                        </header>
+                        
+                        <form action="/groups" method="POST" class="form" id="add-group-form">
+                            <section class="mt-4 space-y-4">
+                                <!-- group name -->
+                                <div class="form-control" id="name-control">
+                                    <label for="name" class="font-medium text-black required">اسم المجموعة</label>
+                                    <input 
+                                        type="text" 
+                                        name="name" 
+                                        id="name" 
+                                        placeholder="أدخل اسم المجموعة" 
+                                        required
+                                        class="input-field"
+                                    >
+                                </div>
+
+                                <!-- group type -->
+                                <div class="form-control w-full" id="group-type-control">
+                                    <label for="group-type" class="font-medium text-black">نوع المجموعة</label>
+                                    <select 
+                                        type="text" 
+                                        name="group-type" 
+                                        id="group-type" 
+                                        placeholder="أختر نوع المجموعة" 
+                                        required
+                                        class="input-field"
+                                    >
+                                        <option disabled selected value="">اختر نوع المجموعة</option>
+                                        <option value="ryiadh">طلاب</option>
+                                        <option value="makkah">معلمين</option>
+                                        <option value="madinah">عاملين</option>
+                                    </select>
+                                </div>
+
+                                <!-- group description -->
+                                <div class="form-control relative" id="description-control">
+                                    <label for="description" class="font-medium text-black">وصف المجموعة</label>
+                                    <textarea
+                                        name="description" 
+                                        id="description" 
+                                        placeholder="أدخل وصف المجموعة" 
+                                        required
+                                        class="input-field h-32! resize-none"
+                                        maxlength="100"
+                                    ></textarea>
+                                    <span id="description-length" class="absolute bottom-2 left-2 text-secondary-foreground text-xs">0 / 100</span>
+                                </div>
+                            </section>
+
+                            <div class="flex justify-center gap-4 mt-4">
+                                <button 
+                                    data-modal-hide="add-group-modal" 
+                                    class="w-10 h-10 rounded-xl flex items-center justify-center bg-main hover:bg-main/80 text-white w-full" 
+                                    data-modal-target="add-group-modal" 
+                                    data-modal-toggle="add-group-modal"
+                                    type="button"
+                                >
+                                    حفظ
+                                </button>
+                                <button 
+                                    data-modal-hide="add-group-modal" 
+                                    class="w-10 h-10 rounded-xl flex items-center justify-center bg-[#F2F3F4] hover:bg-border w-full" 
+                                    data-modal-target="add-group-modal" 
+                                    data-modal-toggle="add-group-modal"
+                                    type="button"
+                                >
+                                    إلغاء
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <script src="./public/js/lib/flowbit.min.js"></script>
         <script type="module" src="./public/js/motion-page.js"></script>
         <script type="module" src="./public/js/groups/groups.js"></script>
+        <script type="module" src="./public/js/groups/add-group.js"></script>
     </body>
 </html>
