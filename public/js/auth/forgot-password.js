@@ -8,7 +8,7 @@ inView("main section", (element) => {
         element,
         { opacity: 1, y: [-100, 0], x: [0, 0] },
         {
-            duration: 0.7,
+            duration: 0.5,
             easing: [0.17, 0.55, 0.55, 1],
         }
     )
@@ -16,7 +16,7 @@ inView("main section", (element) => {
     return () => animate(element, { opacity: 0, x: -100 })
 });
 
-const phoneInput = document.getElementById("phone-control");
+const phoneInput = document.getElementById("phone");
 const emailInput = document.getElementById("email-control");
 const submitBtn = document.getElementById("submit-btn");
 

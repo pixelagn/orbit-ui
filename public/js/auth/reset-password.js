@@ -8,7 +8,7 @@ inView("main section", (element) => {
         element,
         { opacity: 1, y: [-100, 0], x: [0, 0] },
         {
-            duration: 0.9,
+            duration: 0.5,
             easing: [0.17, 0.55, 0.55, 1],
         }
     )

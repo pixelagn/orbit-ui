@@ -198,56 +198,14 @@
                                 tabindex="-1"
                                 data-dropdown-placement="bottom-start"
                             >
-                                +1 <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>
+                                <span id="dropdown-phone-button-value">+966</span>
+                                <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/></svg>
                             </button>
-                            <div id="dropdown-phone" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm border border-border w-52 dark:bg-gray-700">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-phone-button">
-                                    <li>
-                                        <button type="button" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                            <span class="inline-flex items-center">
-                                                United States (+1)
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                            <span class="inline-flex items-center">
-                                                United Kingdom (+44)
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                            <span class="inline-flex items-center">
-                                                Australia (+61)
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                            <span class="inline-flex items-center">
-                                                Germany (+49)
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                            <span class="inline-flex items-center">
-                                                France (+33)
-                                            </span>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-                                            <span class="inline-flex items-center">
-                                                Germany (+49)
-                                            </span>
-                                        </button>
-                                    </li>
-                                </ul>
+                            <div id="dropdown-phone" class="z-10 hidden h-64 overflow-y-auto scrollbar-thin bg-white divide-y divide-gray-100 rounded-lg shadow-sm border border-border w-52 dark:bg-gray-700">
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-phone-button"></ul>
                             </div>
                             <div class="relative w-full">
-                                <input type="text" id="phone-input" class="input-field w-full rounded-l-[0]!" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required />
+                                <input type="text" id="phone" class="input-field w-full rounded-l-[0]!" inputmode="numeric" placeholder="5010203040" required />
                             </div>
                         </div>
                     </div>
@@ -328,6 +286,7 @@
         </main>
 
         <script src="./public/js/lib/flowbit.min.js"></script>
+        <script type="module" src="./public/js/utils/phone-number.js"></script>
         <script type="module" src="./public/js/auth/login.js"></script>
     </body>
 </html>
