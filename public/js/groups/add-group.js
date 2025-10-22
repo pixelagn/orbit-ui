@@ -4,7 +4,7 @@ const addGroupBtn = document.getElementById("add-group-btn");
 
 if (addGroupBtn) {
     addGroupBtn.addEventListener("click", () => {
-        animate("#add-group-modal", { opacity: 1, y: [100, 0] }, { delay: stagger(0.05) })
+        animate("#add-group-modal", { opacity: 1, y: [50, 0] }, { delay: stagger(0.02) })
     });
 }
 
