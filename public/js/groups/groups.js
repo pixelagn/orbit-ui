@@ -15,7 +15,7 @@ inView("main > *", (element) => {
 });
 
 const checkboxAllGroups = document.getElementById("checkbox-all-groups");
-const checkboxesGroup = document.querySelectorAll("#groups-table tbody input[type='checkbox']");
+const checkboxesGroup = document.querySelectorAll("#groups-table tbody tr td:first-child input[type='checkbox']");
 const groupButtonsContainer = document.getElementById("group-buttons");
 
 if (checkboxAllGroups && checkboxesGroup && groupButtonsContainer) {
@@ -39,7 +39,7 @@ if (checkboxAllGroups && checkboxesGroup && groupButtonsContainer) {
 
     checkboxesGroup.forEach(checkbox => {
         checkbox.addEventListener("change", function() {
-            if (document.querySelectorAll("#groups-table tbody input[type='checkbox']:checked").length > 0) {
+            if (document.querySelectorAll("#groups-table tbody tr td:first-child input[type='checkbox']:checked").length > 0) {
                 if (groupButtonsContainer.classList.contains("hidden")) {
                     animate("#group-buttons button", { opacity: 1, y: [50, 0] }, { delay: stagger(0.05) })
                 }
@@ -70,7 +70,7 @@ if (deleteSelectedBtn) {
     deleteSelectedBtn.addEventListener("click", () => {
         animate("#confirm-delete", { opacity: 1, y: [100, 0] }, { delay: stagger(0.05) })
 
-        const selected = document.querySelectorAll("#groups-table tbody input[type='checkbox']:checked");
+        const selected = document.querySelectorAll("#groups-table tbody tr td:first-child input[type='checkbox']:checked");
 
         console.log(selected);
     });
